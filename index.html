@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noun Formation</title><style>:root {
+  color-scheme: dark;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #151517;
+  color: #f6f2e9;
+  --amber: #efbd77;
+  --muted: #b6b1a9;
+  --line: #393638;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 81% 3%, #27232080, transparent 48%), #151517; }
+button, select, textarea { font: inherit; }
+button, select, summary { cursor: pointer; }
+button { color: inherit; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+.top { border-bottom: 1px solid var(--line); background: #181819; }
+.bar, main { width: min(1112px, calc(100% - 80px)); margin-inline: auto; }
+.bar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.brand { display: flex; gap: 12px; align-items: center; font-size: 16px; font-weight: 680; letter-spacing: -.035em; white-space: nowrap; }
+.monogram { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 10px 10px 10px 2px; background: var(--amber); color: #251d15; font: bold 21px Georgia, serif; letter-spacing: -.07em; }
+.crumb { margin-left: 4px; padding-left: 16px; border-left: 1px solid #504944; color: var(--muted); font-size: 13px; font-weight: 450; letter-spacing: 0; }
+.picker { display: flex; gap: 12px; align-items: center; }
+.picker label { font-size: 12px; color: var(--muted); }
+select { max-width: 230px; min-height: 40px; border: 1px solid #474143; border-radius: 8px; padding: 7px 12px; background: #232225; color: #f3e6d4; font-size: 14px; }
+header { padding: clamp(34px, 4.6vw, 64px) 0 30px; }
+h1 { margin: 0; font-size: clamp(40px, 5.3vw, 72px); line-height: 1.07; font-weight: 650; letter-spacing: -.058em; overflow-wrap: anywhere; }
+h1 em { font-style: normal; color: var(--amber); }
+.instruction { margin: 14px 0 0; color: var(--muted); max-width: 55em; font-size: 17px; line-height: 1.55; }
+.workspace { display: grid; grid-template-columns: minmax(170px, 210px) minmax(0, 1fr); gap: clamp(20px, 3vw, 44px); align-items: start; border-top: 1px solid var(--line); padding-top: 28px; }
+aside h3, .field-label, .question-meta span { font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .12em; }
+aside h3 { margin: 8px 12px 13px; color: var(--muted); }
+nav { display: grid; gap: 4px; }
+nav button { display: flex; align-items: center; width: 100%; gap: 12px; min-height: 44px; padding: 7px 11px; text-align: left; border: 1px solid transparent; border-radius: 8px; background: transparent; font-size: 14px; color: #cbc7c2; }
+nav button:hover { background: #222124; }
+nav button[aria-current] { background: #302a24; color: #ffdfad; border-color: #514131; }
+.number { font: 12px ui-monospace, monospace; color: #a8a198; }
+[aria-current] .number, .mark { color: var(--amber); }
+.mark { margin-left: auto; }
+.meter { margin: 22px 11px 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.progress { font-size: 12px; color: var(--muted); }
+progress { display: block; width: 100%; height: 5px; margin-top: 10px; appearance: none; border: none; border-radius: 9px; overflow: hidden; background: #393639; color: var(--amber); }
+progress::-webkit-progress-bar { background: #393639; }
+progress::-webkit-progress-value { background: var(--amber); }
+progress::-moz-progress-bar { background: var(--amber); }
+.sheet { min-width: 0; }
+.note { border: 1px solid #494139; border-radius: 11px; background: #282521; margin-bottom: 14px; }
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+.note summary { display: flex; gap: 10px; align-items: center; padding: 14px 20px; font-size: 14px; font-weight: 600; }
+.book { color: var(--amber); font-size: 21px; line-height: 1; }
+.note summary::after { content: "+"; margin-left: auto; color: var(--amber); font-size: 18px; }
+.note[open] summary::after { content: "−"; }
+.note p { margin: 0; padding: 0 20px 18px; line-height: 1.55; color: #e0d5c6; }
+.question { background: linear-gradient(115deg,#242326,#1e1e21 80%); border: 1px solid #474347; border-radius: 16px; padding: clamp(22px, 3.1vw, 40px); box-shadow: 0 12px 30px #0002; }
+.question-meta { display: flex; gap: 14px; align-items: center; }
+.question-meta b { display: inline-block; padding: 6px 10px; border-radius: 6px; background: #f1c488; color: #302315; font-size: 12px; font-variant-numeric: tabular-nums; }
+.question-meta span, .field-label { color: #c9c3bb; }
+.question h2 { margin: 23px 0 29px; font-size: clamp(23px, 2.35vw, 34px); line-height: 1.28; letter-spacing: -.032em; font-weight: 580; overflow-wrap: anywhere; }
+.question h2:focus { outline: none; }
+.field-label { display: block; margin-bottom: 8px; }
+textarea { display: block; width: 100%; min-height: 122px; resize: vertical; padding: 15px 17px; border: 1px solid #555055; border-radius: 9px; background: #18181b; color: inherit; font-size: 17px; line-height: 1.55; }
+textarea::placeholder { color: #9e9996; }
+.options { display: grid; gap: 9px; }
+.option { display: flex; align-items: center; gap: 13px; padding: 13px 16px; min-height: 48px; background: #272629; border: 1px solid #484548; border-radius: 9px; line-height: 1.45; cursor: pointer; }
+.option:hover, .option:has(:checked) { border-color: #b9905d; }
+.option:has(:checked) { background: #342d25; }
+.option input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--amber); }
+.question details { margin-top: 8px; font-size: 14px; color: #dcc9af; }
+.question summary { padding-block: 8px; width: fit-content; }
+.question summary::before { content: "+ "; color: var(--amber); }
+.question details[open] summary::before { content: "− "; }
+.question details p { margin: 2px 0 8px; line-height: 1.5; }
+.actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #3b383b; }
+.actions button, footer button { min-height: 44px; border-radius: 8px; padding: 10px 17px; font-weight: 600; font-size: 14px; }
+.primary { color: #2b1d0d; border: 1px solid #f1c792; background: var(--amber); }
+.primary:hover { background: #ffd299; }
+.next, #download { background: transparent; color: #ded9d2; border: 1px solid transparent; }
+.next span { margin-left: 4px; }
+.next:hover, #download:hover { border-color: #62594e; }
+button:disabled { opacity: .55; cursor: default; }
+output { display: block; margin-top: 13px; color: #e1c49e; font-size: 14px; line-height: 1.5; }
+output[data-assessment="correct"] { color: #a9d8ad; }
+output:empty { display: none; }
+footer { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px; margin: 14px 0 40px; }
+#status { flex-basis: 100%; text-align: right; }
+@media (max-width: 720px) {
+  .bar, main { width: calc(100% - 32px); }
+  .bar { min-height: 60px; gap: 8px; }
+  .crumb, .picker label { position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; }
+  .brand { font-size: 14px; gap: 7px; }
+  .monogram { width: 29px; height: 29px; font-size: 18px; }
+  select { max-width: 38vw; min-height: 44px; font-size: 13px; padding-inline: 5px; }
+  header { padding: 30px 0 20px; }
+  .instruction { font-size: 15px; margin-top: 10px; }
+  .workspace { display: block; padding-top: 14px; }
+  aside { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin: 0 0 16px; align-items: center; }
+  aside h3 { margin: 0; }
+  nav { grid-column: 1/-1; grid-row: 2; display: flex; flex-wrap: wrap; }
+  nav button { width: auto; min-width: 44px; justify-content: center; background: #201f22; gap: 4px; }
+  .nav-name { position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; }
+  .mark:empty { display: none; }
+  .meter { grid-column: 2; grid-row: 1; border: 0; padding: 0; margin: 0; }
+  progress { margin-top: 4px; height: 3px; }
+  .note { margin-bottom: 10px; }
+  .question { padding: 20px 16px; border-radius: 12px; }
+  .question h2 { margin: 18px 0 20px; }
+  textarea { min-height: 98px; }
+  .actions { margin-top: 16px; }
+}
+
+.steps { display: contents; }
+.steps.grouped { display: flex; flex-wrap: wrap; gap: 3px; }
+.grouped button { width: auto; min-width: 44px; justify-content: center; gap: 3px; }
+.grouped .nav-name { position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; }
+.grouped .mark:empty { display: none; }
+.part-label { margin: 8px 0 1px; font-size: 13px; color: var(--muted); }
+.part { color: var(--muted); margin: 18px 0 0; line-height: 1.45; }
+.word-answer { width: min(100%, 28rem); min-height: 48px; background: #18181b; color: inherit; border: 1px solid #555055; border-radius: 9px; padding: 10px 14px; font: inherit; }
+@media (max-width:720px) {
+  nav:has(.grouped) { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; }
+  nav:has(.grouped) .part-label { position: absolute; clip-path: inset(50%); }
+  .steps.grouped { flex-wrap: nowrap; }
+}
+</style>
+<div class="top"><div class="bar"><div class="brand"><span class="monogram" aria-hidden="true">En</span> English Practice<span class="crumb">Homework</span></div></div></div>
+<main><div data-variant="noun-formation-homework"><header><h1>Noun <em>Formation</em></h1><p class="instruction">Form nouns, translate the sentences and use the new words in your own answers.</p></header><div class="workspace"><aside><h3>Exercises</h3><nav aria-label="Exercises"><h4 class="part-label">Word formation</h4><div class="steps grouped"><button type="button" data-step="0"><span class="number">01</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="1"><span class="number">02</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="2"><span class="number">03</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="3"><span class="number">04</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="4"><span class="number">05</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="5"><span class="number">06</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="6"><span class="number">07</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="7"><span class="number">08</span><span class="nav-name">Word formation</span><span class="mark" aria-hidden="true"></span></button></div><h4 class="part-label">Translation</h4><div class="steps grouped"><button type="button" data-step="8"><span class="number">09</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="9"><span class="number">10</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="10"><span class="number">11</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="11"><span class="number">12</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="12"><span class="number">13</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="13"><span class="number">14</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="14"><span class="number">15</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="15"><span class="number">16</span><span class="nav-name">Translation</span><span class="mark" aria-hidden="true"></span></button></div><h4 class="part-label">Your response</h4><div class="steps grouped"><button type="button" data-step="16"><span class="number">17</span><span class="nav-name">Your response</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="17"><span class="number">18</span><span class="nav-name">Your response</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="18"><span class="number">19</span><span class="nav-name">Your response</span><span class="mark" aria-hidden="true"></span></button><button type="button" data-step="19"><span class="number">20</span><span class="nav-name">Your response</span><span class="mark" aria-hidden="true"></span></button></div></nav><div class="meter"><span class="progress" aria-live="polite"></span><progress aria-label="Homework progress" max="20" value="0"></progress></div></aside><div class="sheet"><section class="question" data-exercise="word-1"><div class="question-meta"><b>Q 1 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-1" tabindex="-1">Daily practice can help you build __________. (confident)</h2><label class="field-label" for="answer-1">Your word</label><input type="text" class="word-answer" id="answer-1" aria-labelledby="prompt-1" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-2" hidden><div class="question-meta"><b>Q 2 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-2" tabindex="-1">I understand the __________ of speaking English every day. (important)</h2><label class="field-label" for="answer-2">Your word</label><input type="text" class="word-answer" id="answer-2" aria-labelledby="prompt-2" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-3" hidden><div class="question-meta"><b>Q 3 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-3" tabindex="-1">We had a short __________ about the course. (discuss)</h2><label class="field-label" for="answer-3">Your word</label><input type="text" class="word-answer" id="answer-3" aria-labelledby="prompt-3" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-4" hidden><div class="question-meta"><b>Q 4 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-4" tabindex="-1">They made a __________ yesterday. (decide)</h2><label class="field-label" for="answer-4">Your word</label><input type="text" class="word-answer" id="answer-4" aria-labelledby="prompt-4" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-5" hidden><div class="question-meta"><b>Q 5 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-5" tabindex="-1">We reached an __________ about the meeting time. (agree)</h2><label class="field-label" for="answer-5">Your word</label><input type="text" class="word-answer" id="answer-5" aria-labelledby="prompt-5" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-6" hidden><div class="question-meta"><b>Q 6 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-6" tabindex="-1">I’d like to see an __________ in my English. (improve)</h2><label class="field-label" for="answer-6">Your word</label><input type="text" class="word-answer" id="answer-6" aria-labelledby="prompt-6" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-7" hidden><div class="question-meta"><b>Q 7 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-7" tabindex="-1">Thank you for your __________. (kind)</h2><label class="field-label" for="answer-7">Your word</label><input type="text" class="word-answer" id="answer-7" aria-labelledby="prompt-7" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="word-8" hidden><div class="question-meta"><b>Q 8 / 20</b><span>Word formation</span></div><p class="part">1. Complete each sentence with the correct form of the word in brackets.</p><h2 id="prompt-8" tabindex="-1">She takes __________ for her work. (responsible)</h2><label class="field-label" for="answer-8">Your word</label><input type="text" class="word-answer" id="answer-8" aria-labelledby="prompt-8" autocomplete="off" spellcheck="false" maxlength="100"><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-1" hidden><div class="question-meta"><b>Q 9 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-9" tabindex="-1" lang="uk">Я прийняла рішення вчора.</h2><label class="field-label" for="answer-9">Your answer</label><textarea id="answer-9" aria-labelledby="prompt-9" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-2" hidden><div class="question-meta"><b>Q 10 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-10" tabindex="-1" lang="uk">Ми дійшли згоди щодо часу зустрічі.</h2><label class="field-label" for="answer-10">Your answer</label><textarea id="answer-10" aria-labelledby="prompt-10" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-3" hidden><div class="question-meta"><b>Q 11 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-11" tabindex="-1" lang="uk">Я розумію важливість практики.</h2><label class="field-label" for="answer-11">Your answer</label><textarea id="answer-11" aria-labelledby="prompt-11" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-4" hidden><div class="question-meta"><b>Q 12 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-12" tabindex="-1" lang="uk">Дякую за вашу доброту.</h2><label class="field-label" for="answer-12">Your answer</label><textarea id="answer-12" aria-labelledby="prompt-12" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-5" hidden><div class="question-meta"><b>Q 13 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-13" tabindex="-1" lang="uk">Я хочу побачити покращення своєї англійської.</h2><label class="field-label" for="answer-13">Your answer</label><textarea id="answer-13" aria-labelledby="prompt-13" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-6" hidden><div class="question-meta"><b>Q 14 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-14" tabindex="-1" lang="uk">Вона несе відповідальність за свої помилки.</h2><label class="field-label" for="answer-14">Your answer</label><textarea id="answer-14" aria-labelledby="prompt-14" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-7" hidden><div class="question-meta"><b>Q 15 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-15" tabindex="-1" lang="uk">Обговорення допомогло нам.</h2><label class="field-label" for="answer-15">Your answer</label><textarea id="answer-15" aria-labelledby="prompt-15" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="translate-8" hidden><div class="question-meta"><b>Q 16 / 20</b><span>Ukrainian → English</span></div><p class="part">2. Translate into English.</p><h2 id="prompt-16" tabindex="-1" lang="uk">Чи не були б ви такі ласкаві мені допомогти?</h2><label class="field-label" for="answer-16">Your answer</label><textarea id="answer-16" aria-labelledby="prompt-16" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Check answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="respond-1" hidden><div class="question-meta"><b>Q 17 / 20</b><span>Write in English</span></div><p class="part">3. Answer in complete sentences.</p><h2 id="prompt-17" tabindex="-1">What helps you build confidence when you speak English?</h2><label class="field-label" for="answer-17">Your answer</label><textarea id="answer-17" aria-labelledby="prompt-17" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Record answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="respond-2" hidden><div class="question-meta"><b>Q 18 / 20</b><span>Write in English</span></div><p class="part">3. Answer in complete sentences.</p><h2 id="prompt-18" tabindex="-1">What would you like to see an improvement in?</h2><label class="field-label" for="answer-18">Your answer</label><textarea id="answer-18" aria-labelledby="prompt-18" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Record answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="respond-3" hidden><div class="question-meta"><b>Q 19 / 20</b><span>Write in English</span></div><p class="part">3. Answer in complete sentences.</p><h2 id="prompt-19" tabindex="-1">What is one decision you made recently?</h2><label class="field-label" for="answer-19">Your answer</label><textarea id="answer-19" aria-labelledby="prompt-19" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Record answer</button><button class="next" type="button">Next exercise <span aria-hidden="true">→</span></button></div></section>
+<section class="question" data-exercise="respond-4" hidden><div class="question-meta"><b>Q 20 / 20</b><span>Write in English</span></div><p class="part">3. Answer in complete sentences.</p><h2 id="prompt-20" tabindex="-1">Think of a polite request you might make at a shop, office, or post office. Write it using “Would you be so kind as to…?”</h2><label class="field-label" for="answer-20">Your answer</label><textarea id="answer-20" aria-labelledby="prompt-20" placeholder="Write in English…" maxlength="1500" lang="en"></textarea><output aria-live="polite"></output><div class="actions"><button class="check primary" type="button">Record answer</button></div></section></div></div></div>
+<footer><button class="primary" id="copy" type="button">Скопіювати відповіді</button><button id="send" hidden>Send to my teacher</button><button id="download">Download answers</button>
+<textarea id="copy-text" readonly hidden aria-label="Answers to copy"></textarea>
+<output id="status" aria-live="polite"></output></footer></main>
+<script>const assignment = {"id":"noun-formation-homework","version":1,"title":"Noun Formation","variants":[{"id":"noun-formation-homework","title":"Noun Formation","instruction":"Form nouns, translate the sentences and use the new words in your own answers.","items":[{"id":"word-1","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"Daily practice can help you build __________. (confident)","accepted":["confidence"]},{"id":"word-2","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"I understand the __________ of speaking English every day. (important)","accepted":["importance"]},{"id":"word-3","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"We had a short __________ about the course. (discuss)","accepted":["discussion"]},{"id":"word-4","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"They made a __________ yesterday. (decide)","accepted":["decision"]},{"id":"word-5","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"We reached an __________ about the meeting time. (agree)","accepted":["agreement"]},{"id":"word-6","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"I’d like to see an __________ in my English. (improve)","accepted":["improvement"]},{"id":"word-7","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"Thank you for your __________. (kind)","accepted":["kindness"]},{"id":"word-8","section":"1. Complete each sentence with the correct form of the word in brackets.","kind":"gap","prompt":"She takes __________ for her work. (responsible)","accepted":["responsibility"]},{"id":"translate-1","section":"2. Translate into English.","kind":"translation","prompt":"Я прийняла рішення вчора.","accepted":["I made a decision yesterday.","Yesterday I made a decision.","I made the decision yesterday."]},{"id":"translate-2","section":"2. Translate into English.","kind":"translation","prompt":"Ми дійшли згоди щодо часу зустрічі.","accepted":["We reached an agreement about the meeting time.","We agreed on the meeting time.","We reached an agreement on the meeting time.","We agreed on a time for the meeting."]},{"id":"translate-3","section":"2. Translate into English.","kind":"translation","prompt":"Я розумію важливість практики.","accepted":["I understand the importance of practice.","I understand how important practice is."]},{"id":"translate-4","section":"2. Translate into English.","kind":"translation","prompt":"Дякую за вашу доброту.","accepted":["Thank you for your kindness.","Thanks for your kindness.","Thank you for being so kind."]},{"id":"translate-5","section":"2. Translate into English.","kind":"translation","prompt":"Я хочу побачити покращення своєї англійської.","accepted":["I want to see an improvement in my English.","I want to see my English improve.","I want to see improvement in my English."]},{"id":"translate-6","section":"2. Translate into English.","kind":"translation","prompt":"Вона несе відповідальність за свої помилки.","accepted":["She takes responsibility for her mistakes.","She is responsible for her mistakes.","She bears responsibility for her mistakes."]},{"id":"translate-7","section":"2. Translate into English.","kind":"translation","prompt":"Обговорення допомогло нам.","accepted":["The discussion helped us.","Having the discussion helped us."]},{"id":"translate-8","section":"2. Translate into English.","kind":"translation","prompt":"Чи не були б ви такі ласкаві мені допомогти?","accepted":["Would you be so kind as to help me?","Would you be kind enough to help me?","Could you be so kind as to help me?"]},{"id":"respond-1","section":"3. Answer in complete sentences.","kind":"reply","prompt":"What helps you build confidence when you speak English?"},{"id":"respond-2","section":"3. Answer in complete sentences.","kind":"reply","prompt":"What would you like to see an improvement in?"},{"id":"respond-3","section":"3. Answer in complete sentences.","kind":"reply","prompt":"What is one decision you made recently?"},{"id":"respond-4","section":"3. Answer in complete sentences.","kind":"reply","prompt":"Think of a polite request you might make at a shop, office, or post office. Write it using “Would you be so kind as to…?”"}]}]};
+const delivery = null;
+function normalizeAnswer(value) {
+  return value.normalize("NFC").toLowerCase().replace(/[‘’]/g, "'")
+    .trim().replace(/[.!?]+$/, "").replace(/\s+/g, " ");
+}
+function assess(item, answer) {
+  if (!answer.trim()) return "blank";
+  if (item.accepted?.some(key => normalizeAnswer(key) === normalizeAnswer(answer))) return "correct";
+  return (item.kind === "choice" || item.kind === "gap") ? "incorrect" : "review";
+}
+const draftKey = "homework:variants:" + (delivery?.token ?? assignment.id + ":" + assignment.version);
+let cached = {};
+try { cached = JSON.parse(localStorage.getItem(draftKey)) ?? {}; } catch {}
+const picker = document.querySelector("#variant");
+const status = document.querySelector("#status");
+const send = document.querySelector("#send");
+
+const variants = new Map(assignment.variants.map(spec => {
+  const panel = document.querySelector('[data-variant="' + spec.id + '"]');
+  const saved = cached.variants && Object.hasOwn(cached.variants, spec.id) ? cached.variants[spec.id] : {};
+  const records = new Map(spec.items.map(item => [
+    item.id, Object.hasOwn(saved, item.id) ? saved[item.id] : { current: "", first: null, help: [] },
+  ]));
+  const step = cached.steps?.[spec.id];
+  return [spec.id, { spec, panel, records, step: Number.isInteger(step) && spec.items[step] ? step : 0 }];
+}));
+let active = variants.get(cached.selected) ?? variants.values().next().value;
+let sent = Boolean(cached.sent);
+let pending = Boolean(cached.pending);
+
+function save() {
+  const drafts = Object.fromEntries([...variants].map(([id, variant]) => [id, Object.fromEntries(variant.records)]));
+  try {
+    const steps = Object.fromEntries([...variants].map(([id, variant]) => [id, variant.step]));
+    localStorage.setItem(draftKey, JSON.stringify({ variants: drafts, steps, selected: active.spec.id, sent, pending }));
+    return true;
+  } catch { return false; }
+}
+
+function updateProgress({ spec, panel, records }) {
+  const count = spec.items.filter(item => records.get(item.id).current.trim()).length;
+  panel.querySelector(".progress").textContent = count + " / " + spec.items.length + " answered";
+  panel.querySelector("progress").value = count;
+  for (const button of panel.querySelectorAll("[data-step]")) {
+    const done = Boolean(records.get(spec.items[Number(button.dataset.step)].id).current.trim());
+    button.dataset.answered = String(done);
+    button.querySelector(".mark").textContent = done ? "✓" : "";
+  }
+}
+
+function showExercise(variant, focus = false) {
+  const cards = variant.panel.querySelectorAll("[data-exercise]");
+  cards.forEach((card, i) => { card.hidden = i !== variant.step; });
+  variant.panel.querySelectorAll("[data-step]").forEach((button, i) => {
+    if (i === variant.step) button.setAttribute("aria-current", "step");
+    else button.removeAttribute("aria-current");
+  });
+  if (focus) cards[variant.step].querySelector("h2").focus();
+}
+
+function showActive() {
+  if (picker) picker.value = active.spec.id;
+  for (const variant of variants.values()) variant.panel.hidden = variant !== active;
+}
+
+function lockControls(inFlight = false) {
+  if (picker) picker.disabled = inFlight || pending || sent;
+  send.disabled = inFlight || sent;
+  for (const field of active.panel.querySelectorAll("textarea, input, button.check")) field.disabled = inFlight || pending || sent;
+}
+
+for (const variant of variants.values()) {
+  const { spec, panel, records } = variant;
+  panel.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => {
+    variant.step = Number(button.dataset.step);
+    showExercise(variant, true);
+    save();
+  }));
+  panel.querySelectorAll("button.next").forEach(button => button.addEventListener("click", () => {
+    variant.step++;
+    showExercise(variant, true);
+    save();
+  }));
+  for (const item of spec.items) {
+    const card = panel.querySelector('[data-exercise="' + item.id + '"]');
+    const record = records.get(item.id);
+    const fields = card.querySelectorAll("textarea, input");
+    const output = card.querySelector("output");
+    if (item.kind === "choice") {
+      const options = card.querySelector(".options");
+      const labels = [...options.children];
+      for (let i = labels.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [labels[i], labels[j]] = [labels[j], labels[i]];
+      }
+      options.append(...labels);
+    }
+    for (const field of fields) {
+      if (field.type === "radio" || field.type === "checkbox") field.checked = field.value === record.current;
+      else field.value = record.current;
+      field.addEventListener("input", () => {
+        record.current = field.type === "checkbox" && !field.checked ? "" : field.value;
+        output.textContent = "";
+        save();
+        updateProgress(variant);
+      });
+    }
+    for (const detail of card.querySelectorAll("details[data-help]")) {
+      detail.addEventListener("toggle", () => {
+        if (!detail.open || pending || sent || send.disabled ||
+            record.help.some(entry => entry.type === detail.dataset.help)) return;
+        record.help.push({ type: detail.dataset.help, beforeFirst: record.first === null });
+        save();
+      });
+    }
+    card.querySelector(".check")?.addEventListener("click", () => {
+      if (!record.current.trim()) {
+        output.textContent = "Enter an answer first.";
+        return;
+      }
+      record.first ??= record.current;
+      const assessment = assess(item, record.current);
+      output.dataset.assessment = assessment;
+      output.textContent = {
+        correct: "That works.",
+        incorrect: item.kind === "gap" ? "Check the noun form and try again." : "Try another option.",
+        review: "Answer recorded for your teacher.",
+      }[assessment];
+      save();
+    });
+  }
+  updateProgress(variant);
+  showExercise(variant);
+}
+
+picker?.addEventListener("change", () => {
+  active = variants.get(picker.value);
+  showActive();
+  status.textContent = "";
+  save();
+});
+
+function answers({ spec, records }) {
+  return spec.items.map(item => {
+    const { current, first, help } = records.get(item.id);
+    return { id: item.id, first: first ?? current, last: current, help };
+  });
+}
+
+function answerText() {
+  const { spec } = active;
+  const submission = answers(active);
+  const count = submission.filter(answer => answer.last.trim()).length;
+  const lines = [spec.title, count + " / " + submission.length + " answered"];
+  let section;
+  submission.forEach((answer, index) => {
+    const item = spec.items[index];
+    if (item.section && item.section !== section) lines.push("", item.section);
+    section = item.section;
+    lines.push("", (index + 1) + ". " + item.prompt, "→ " + (answer.last.trim() || "[No answer]"));
+    if (answer.first !== answer.last) lines.push("First attempt: " + answer.first);
+    if (answer.help.length) lines.push("Help: " + answer.help.map(entry =>
+      entry.type + (entry.beforeFirst ? " (before first attempt)" : " (after first attempt)")).join(", "));
+  });
+  return lines.join("\n");
+}
+
+const copyBox = document.querySelector("#copy-text");
+function clearCopyPreview() {
+  copyBox.hidden = true;
+  copyBox.value = "";
+  if (status.dataset.copy) {
+    status.textContent = "";
+    delete status.dataset.copy;
+  }
+}
+document.querySelector("main").addEventListener("input", clearCopyPreview);
+picker?.addEventListener("change", clearCopyPreview);
+document.querySelector("#copy").addEventListener("click", async () => {
+  clearCopyPreview();
+  status.dataset.copy = "true";
+  if (!answers(active).some(answer => answer.last.trim())) {
+    status.textContent = "Answer at least one question first.";
+    return;
+  }
+  const text = answerText();
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    copyBox.value = text;
+    copyBox.hidden = false;
+    copyBox.focus();
+    copyBox.select();
+    let copied = false;
+    try { copied = document.execCommand("copy"); } catch {}
+    if (!copied) {
+      status.textContent = "Your answers are selected. Choose Copy, then paste them into Telegram or Miro.";
+      return;
+    }
+    copyBox.hidden = true;
+    document.querySelector("#copy").focus();
+  }
+  status.textContent = "Answers copied. Paste them into Telegram or Miro.";
+});
+
+function downloadAnswers(file) {
+  const url = URL.createObjectURL(file);
+  const link = Object.assign(document.createElement("a"), { href: url, download: file.name });
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+document.querySelector("#download").addEventListener("click", () => {
+  const file = new File([answerText()], active.spec.id + "-answers.txt", { type: "text/plain" });
+  downloadAnswers(file);
+});
+
+showActive();
+send.hidden = !delivery;
+lockControls();
+const waiting = "Delivery is unconfirmed. Check again or download your answers.";
+if (sent) status.textContent = "Sent to your teacher.";
+else if (pending) status.textContent = waiting;
+send.addEventListener("click", async () => {
+  const submission = answers(active);
+  if (!submission.some(answer => answer.last.trim())) {
+    status.textContent = "Answer at least one question.";
+    return;
+  }
+  lockControls(true);
+  status.textContent = "Sending…";
+  try {
+    const response = await fetch(delivery.endpoint, {
+      method: "POST",
+      body: JSON.stringify({ token: delivery.token, variant: active.spec.id, answers: submission }),
+    });
+    const result = await response.json();
+    pending = ["sending", "unknown"].includes(result.status);
+    sent = result.status === "sent";
+    save();
+    if (sent) status.textContent = "Sent to your teacher.";
+    else if (pending) status.textContent = waiting;
+    else if (result.status === "different-variant") {
+      status.textContent = "Another version was already used for this assignment. You can download these answers.";
+    } else status.textContent = "Could not send. Try again or download your answers.";
+  } catch {
+    status.textContent = (save() ? "Answers saved on this device. " : "") + "Check your connection or download your answers.";
+  } finally {
+    lockControls();
+  }
+});
+
+</script></html>
